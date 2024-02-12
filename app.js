@@ -41,7 +41,7 @@ app.get('/players/', async (request, response) => {
     `
   const allPlayersDetailsArray = await db.all(allPlayersDetailsQuery)
   response.send(
-    allPlayersDetailsArray.map(eachPlayer => getPlayerDetails(eachPlayer)),
+    allPlayersDetailsArray.map(eachPlayer => getPlayerDetails(eachPlayer))
   )
 })
 
@@ -63,7 +63,7 @@ app.get('/players/:player_id', async (request, response) => {
 
 //API 3
 
-app.put('players/:playerId', async (request, response) => {
+app.put('/players/:playerId', async (request, response) => {
   const {playerName} = request.body
   const {playerId} = request.params
   const updatePlayerDetailsQuery = `
@@ -72,7 +72,7 @@ app.put('players/:playerId', async (request, response) => {
     SET
         player_name = '${playerName}'
     WHERE 
-        player_id = ${player_id};
+        player_id = ${playerId};
     `
   await db.run(updatePlayerDetailsQuery)
   response.send('Player Details Updated')
@@ -104,7 +104,7 @@ app.get('/matches/:matchId/', async (request, response) => {
 
 //API 5
 
-app.get('players/:playerId/matches/', async (request, response) => {
+app.get('/players/:playerId/matches/', async (request, response) => {
   const {playerId} = request.params
   const allMatchesPlayersQuery = `
     SELECT 
